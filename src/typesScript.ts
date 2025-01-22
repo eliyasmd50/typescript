@@ -2,12 +2,12 @@
 let firstName: String = "Eliyas";
 let age: number = 26;
 let married: boolean = false;
-let lastName = "Mohamed";
+let lastName = "Mohamed"; // implicit type assigning by infer itself
 
 console.log(typeof firstName);
 
 //Typescript types any type for the implicit types
-const json = JSON.parse("55");
+const json = JSON.parse("55");// js will parse number directly
 console.log(json);
 const json1 = JSON.parse('{"name": "Eliyas"}');// js needs a json object to parse it out the value
 console.log(json1);
@@ -39,7 +39,7 @@ const obj = { name: "Eliyas", age: 26} as { name: string, age: number};
 console.log(obj);
 
 const unkownValue: unknown = "Hello World";
-console.log(typeof (unkownValue as string))
+console.log(typeof (unkownValue as string));
 
 // API hit will return the value with type safe if it is not assigned
 // const externalData = fetchData() as {id: number, name: string };
@@ -60,6 +60,7 @@ console.log(names);
 const marks: readonly number[] = [98, 99, 100];
 // marks.push(76); // dosen't allow to change the size of the array either it throws an error
 console.log(marks);
+
 
 //TypeScript type inference can infer the type of an array if it has the values
 const numbers = [1,2,3,4];
@@ -109,7 +110,7 @@ let maruti = {
     type: "m-800",
 }
 maruti.type = "Fortuner";
-// maruti.type = 800// automatic type inference without declaring
+// maruti.type = 800//throws an error for automatic type inference without declaring
 console.log(maruti);
 
 //Optional Properties either it will have the value or not
@@ -142,8 +143,8 @@ enum CardinalDirections {
 let currentDirection = CardinalDirections.North;
 console.log(currentDirection); // logs only 0
 
-console.log(CardinalDirections.south);
-console.log(CardinalDirections.west);
+console.log(CardinalDirections.south); // 2
+console.log(CardinalDirections.west); // 4
 
 //Numeric enums fully initialized then the values will not be incremented automatically
 enum StatusCodes {
@@ -164,8 +165,8 @@ enum Directions {
     West = "wes"
 }
 
-console.log(Directions.North);
-console.log(Directions.West);
+console.log(Directions.North); // nor
+console.log(Directions.West); // wes
 
 
 // Typescripts type aliases
@@ -255,3 +256,180 @@ function add (a:number, b: number, c?: number) {
 }
 console.log(add(1, 2));
 
+// Default Parameter in a function arguments and it will be taken as an optional parameter
+function pow(value: number, exponent: number = 10): number {
+    return value ** exponent;
+}
+
+console.log(pow(2)); // 1024
+console.log(pow(2, 10)); // 1024
+
+// Named Parameter if same as like typing the normal parameter, we can change the parameter as we can based on the names
+function divide({dividend, divider} : { dividend: number, divider: number}): number {
+    return dividend / divider;
+}
+
+console.log(divide({ divider : 6, dividend : 12}));//2
+console.log(divide({ dividend : 6, divider : 2}));// 3
+
+// Rest Parameters type should always be array and it can be like a normal parameter
+function addit(a: number, b: number, ...rest: number[]): number {
+    return a + b + rest.reduce((i, c) => i + c, 0)
+}
+console.log(addit(10,10,10,10,10));// 50
+console.log(addit(5,5,5,5,5));// 25
+
+// Type Aliases for an arrow function for the parameters and output declaration
+type negate = (value: number) => number;  // type declaration
+const negateFunction : negate = (value) => value * -1; // function declaratiom
+console.log(negateFunction(2));// -2 (output)
+
+
+//TypeScript Casting
+
+// casting with as
+let x : unknown = "Hellow";
+console.log((x as string).length);// 6
+
+// casting <>
+let m : unknown = "Hellow";
+console.log(typeof (<string>m)); //unkown converted to string type while doing this execution
+console.log((<string>m).length); // checking with a valid length
+
+// Force Casting
+let n = "Hellow";
+// console.log(((x as unknown) as number).length); //undefined because length will not defined for number
+
+
+// Typescript Classes
+// Adds types and visibility modifiers to javascript classes
+
+// Members Types 
+// Member of a class (properties and methods) are typed in type annotations
+class Person {
+    name: string;
+}
+const person = new Person();
+person.name = "ELiyas";
+console.log(person);
+
+// Access Modifiers
+// Public - (Default) allow access to the class members from anywhere
+// private- only allow access to the class memebers from within the class
+// protected - allow access to the class memebers within itself and the class that inherit it
+
+class Person1 {
+    private name: string;
+
+    public constructor(name: string) {
+        this.name = name
+    }
+    public getName(): string {
+        return this.name;
+    }
+ }
+
+ const person1 = new Person1("Eliyas Mohamed");
+ console.log(person1.getName());//Eliyas Mohamed // it is a public method so it will be called outside the class
+ // console.log(person1.name); //will thorow error it is a private property it cannot be called
+
+
+ // Parameter properties
+ // adding visibility modifiers to the class mebers for the constructor definition
+ class Person2 {
+    // name is a private member variable
+    public constructor(private name: string) {}
+
+    public getName(): string {
+        return this.name;
+    }
+ }
+const person2 = new Person2("EliSab");
+console.log(person2.getName());// EliSab
+
+// Readonly same as like arrays we can't change the properties after definition
+class Person3 {
+    private readonly name: string;
+
+    public constructor (name: string) {
+        this.name = name
+    }
+
+    public getName(): string {
+        return this.name;
+    }
+}
+const person3 = new Person3("sabEli");
+console.log(person3.getName());
+// person3.name = "ELiyas"; // it cannot be reassign because it is readonly and Private modifiers
+
+
+//Inheritance : implements
+// class can implements multiple inheritance one after other like below
+// class Rectangle implements Shape, Colored {}
+interface Shape {
+    getArea: () => number;
+}
+class Rectangle1 implements Shape {
+    public constructor (protected readonly width: number, protected readonly height: number) {}
+
+    public getArea() {
+        return this.width * this.height;
+    }
+
+    public info() : string {
+        return `Rectangle[width= ${this.width}, height= ${this.height}]`;
+    }
+}
+const myRectangle = new Rectangle1(10, 20);
+console.log(myRectangle.getArea());
+console.log(myRectangle.info());
+
+// inheritance : extends
+// class can extends only one other class
+class Square extends Rectangle1 {
+    public constructor (width: number) {
+        super(width, width); // in this place we are initiating the parent class and giving values to the parent class constructor
+    }
+    // getArea gets inherited from the 
+}
+const mySquare = new Square(20);
+console.log(mySquare.getArea());// 400
+
+// override in class will change a method with the same name in the class that extends
+class Square1 extends Rectangle1 {
+    public constructor(width: number) {
+        super(width, width);
+    }
+    public override info(): string {
+        return `Square[length=${this.width}, width=${this.width}]`
+    }
+}
+const square1 = new Square1(30);
+console.log(square1.getArea());
+console.log(square1.info()); 
+
+// Abstract class 
+// we can make this as a base class for other class without implemeting all its mebers
+// we cannot make a instance of an abstract class since it is not initiated fully
+
+abstract class Polygon {
+    public abstract getArea(): number;
+
+    public info() : string {
+        return `Polygon[${this.getArea()}]`;
+    }
+}
+
+class Reactangle2 extends Polygon {
+    public constructor(protected readonly width: number, protected readonly height: number) {
+        super();
+    }
+
+    public getArea(): number {
+        return this.width * this.height;
+    }
+}
+const reactangle2 = new Reactangle2(20, 40);
+console.log(reactangle2.getArea());
+console.log(reactangle2.info());  // we can call the polygon class function here without fully implemented members
