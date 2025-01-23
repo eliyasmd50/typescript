@@ -120,7 +120,7 @@ let swift : { type: string, year?: number } = {
 swift.year = 2024;// later assiginig by not expecting the variable to be present immediate effect
 console.log(swift);
 
-// Index Signatures for the object assiginig
+// Index Signatures for the object assiginig (came from future Record utility package is similar to this)
 const nameAgeMap : { [index: string]: number } = {
     mohamedELiyas: 26
 };
@@ -433,3 +433,151 @@ class Reactangle2 extends Polygon {
 const reactangle2 = new Reactangle2(20, 40);
 console.log(reactangle2.getArea());
 console.log(reactangle2.info());  // we can call the polygon class function here without fully implemented members
+
+// TypeScript Basic Generics
+function crateParis<V, U>(v1: V, v2: U): [V, U] {
+    return [v1, v2];
+}
+console.log(crateParis<string, number>("Hellow", 45));// Giving the type value as like dynamically
+console.log(crateParis(45, "hellow"));// infer genrics for the type variable
+
+// classed in generics
+// we can use generics as a type defining in a dynamic way we can reinitiate or redeclare the variable
+class NamedValue<T> {
+    private _value : T | undefined;
+
+    constructor (private name: string) {}
+
+    public setValue(_value: T) {
+        this._value = _value;
+    }
+
+    public getValue(): T | undefined {
+        return this._value;
+    }
+    public info(): string {
+        return `${this.name}: ${this._value}`;
+    }
+}
+const namedValue = new NamedValue<number>("My Number");
+namedValue.setValue(10);
+console.log(namedValue.getValue());
+console.log(namedValue.info());
+
+// Type Aliases and interface 
+type Wrapped<T> = { value: T};
+
+const wrappedText: Wrapped<string> = { value: "Eli" };
+const wrappedNumber: Wrapped<number> = { value : 10 };
+console.log(wrappedText);
+console.log(wrappedNumber);
+
+interface Wrap<T> {
+    value: T
+};
+
+const wrap: Wrap<number> = {
+    value: 25
+};
+console.log(wrap);
+
+// Default values for the generics
+class NamedVal<T = string> {
+    private value : T | undefined;
+
+    constructor(private name: string ) {}
+
+    public setValue(value: T) {
+        this.value = value;
+    }
+    public getValue(): T {
+        return this.value;
+    }
+    public info(): string {
+        return `${this.name}: ${this.value}`;
+    }
+}
+const nameVal = new NamedVal<number>("Hellow"); // assiging the type in the generics
+nameVal.setValue(55);
+console.log(nameVal.getValue());
+console.log(nameVal.info());
+
+// Extends can be added to give a constraint for what is allowd and what is not
+function createLoggedPair<T extends string | number, U extends string | boolean>(v1: T, v2 : U): [T, U] {
+    console.log(`creating the log pair v1= ${v1}, v2=${v2}`);
+    return [v1, v2];
+}
+console.log(createLoggedPair<number, string>(2, "Eli"));
+
+// TypeScript utility types
+// common utility types that is available in typeScript
+
+
+// Partial which makes all the properties to be optional
+interface obj1 {
+    value1: string,
+    value2: string
+}
+const myValue : Partial<obj1> = {} // in here it is clear that parameters are not decalred but it is not throwing any error
+myValue.value1 = "Hellow";
+console.log(myValue);
+
+//Required changes all the properties in the objects to be required
+interface car {
+    year: number,
+    model: string,
+    mileage?: number
+}
+const myCar: Required<car> = {
+    year: 2024,
+    model: "Benz",
+    mileage: 10// required field when using this utility
+}
+console.log(myCar);// it gives all the properties so that the myCar has all the values
+
+// Record utility type is used to define object a key type and value type
+const nameAgeMap1 : Record<string, number> = {
+    "ELiyas": 26,
+    "sab": 24
+}
+console.log(nameAgeMap1);
+
+// omit removes keys from an object
+interface Person4 {
+    name: string,
+    age: number,
+    married: boolean
+}
+const spongeBob: Omit<Person4, 'age' | 'married'> = {
+    name: "Sponge Bob"
+    // omit removes age and married in here so it can't be added as a property
+}
+console.log(spongeBob);
+
+// Pick removes all but the specified keys from an object type
+// using above Person4 interface
+const batMan : Pick<Person4, 'married'> = {
+    married: false
+    // rest of the properties is removed and the thing which is mentioned in the argument only picked here
+}
+console.log(batMan);
+
+// Exclude removes the type in a union types
+type Primitives = string | number | boolean;
+let batCave : Exclude<Primitives, string> = true;
+console.log(batCave);
+batCave = 1;
+console.log(batCave);
+// batCave = "Hellow";// it cannot be string because of the Exclude utility
+console.log(batCave);
+
+// ReturnType extract the return type of a function
+type PointGenerator = () => { x: number, y: number};
+const point: ReturnType<PointGenerator> =  {
+    x: 10,
+    y: 20
+}
+// here it should be a function but it extracts the output of it
+console.log(point);
+
+//Parameters utitlity is used to extract the 

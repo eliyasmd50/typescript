@@ -109,7 +109,7 @@ var swift = {
 };
 swift.year = 2024; // later assiginig by not expecting the variable to be present immediate effect
 console.log(swift);
-// Index Signatures for the object assiginig
+// Index Signatures for the object assiginig (came from future Record utility package is similar to this)
 var nameAgeMap = {
     mohamedELiyas: 26
 };
@@ -359,3 +359,105 @@ var Reactangle2 = /** @class */ (function (_super) {
 var reactangle2 = new Reactangle2(20, 40);
 console.log(reactangle2.getArea());
 console.log(reactangle2.info()); // we can call the polygon class function here without fully implemented members
+// TypeScript Basic Generics
+function crateParis(v1, v2) {
+    return [v1, v2];
+}
+console.log(crateParis("Hellow", 45)); // Giving the type value as like dynamically
+console.log(crateParis(45, "hellow")); // infer genrics for the type variable
+// classed in generics
+// we can use generics as a type defining in a dynamic way we can reinitiate or redeclare the variable
+var NamedValue = /** @class */ (function () {
+    function NamedValue(name) {
+        this.name = name;
+    }
+    NamedValue.prototype.setValue = function (_value) {
+        this._value = _value;
+    };
+    NamedValue.prototype.getValue = function () {
+        return this._value;
+    };
+    NamedValue.prototype.info = function () {
+        return "".concat(this.name, ": ").concat(this._value);
+    };
+    return NamedValue;
+}());
+var namedValue = new NamedValue("My Number");
+namedValue.setValue(10);
+console.log(namedValue.getValue());
+console.log(namedValue.info());
+var wrappedText = { value: "Eli" };
+var wrappedNumber = { value: 10 };
+console.log(wrappedText);
+console.log(wrappedNumber);
+;
+var wrap = {
+    value: 25
+};
+console.log(wrap);
+// Default values for the generics
+var NamedVal = /** @class */ (function () {
+    function NamedVal(name) {
+        this.name = name;
+    }
+    NamedVal.prototype.setValue = function (value) {
+        this.value = value;
+    };
+    NamedVal.prototype.getValue = function () {
+        return this.value;
+    };
+    NamedVal.prototype.info = function () {
+        return "".concat(this.name, ": ").concat(this.value);
+    };
+    return NamedVal;
+}());
+var nameVal = new NamedVal("Hellow"); // assiging the type in the generics
+nameVal.setValue(55);
+console.log(nameVal.getValue());
+console.log(nameVal.info());
+// Extends can be added to give a constraint for what is allowd and what is not
+function createLoggedPair(v1, v2) {
+    console.log("creating the log pair v1= ".concat(v1, ", v2=").concat(v2));
+    return [v1, v2];
+}
+console.log(createLoggedPair(2, "Eli"));
+var myValue = {}; // in here it is clear that parameters are not decalred but it is not throwing any error
+myValue.value1 = "Hellow";
+console.log(myValue);
+var myCar = {
+    year: 2024,
+    model: "Benz",
+    mileage: 10 // required field when using this utility
+};
+console.log(myCar); // it gives all the properties so that the myCar has all the values
+// Record utility type is used to define object a key type and value type
+var nameAgeMap1 = {
+    "ELiyas": 26,
+    "sab": 24
+};
+console.log(nameAgeMap1);
+var spongeBob = {
+    name: "Sponge Bob"
+    // omit removes age and married in here so it can't be added as a property
+};
+console.log(spongeBob);
+// Pick removes all but the specified keys from an object type
+// using above Person4 interface
+var batMan = {
+    married: false
+    // rest of the properties is removed and the thing which is mentioned in the argument only picked here
+};
+console.log(batMan);
+var batCave = true;
+console.log(batCave);
+batCave = 1;
+console.log(batCave);
+// batCave = "Hellow";// it cannot be string because of the Exclude utility
+console.log(batCave);
+var point = {
+    x: 10,
+    y: 20
+};
+// here it should be a function but it extracts the output of it
+console.log(point);
+//Parameters utitlity is used to extract the 
