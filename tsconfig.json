@@ -2,8 +2,9 @@
   "compilerOptions": {
     "outDir": "./build",
     "noImplicitAny": true,
-    "strictNullChecks": false,
-    "noImplicitOverride": true
+    "strictNullChecks": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true
   },
   "include": ["src"]
 }

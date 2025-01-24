@@ -460,4 +460,61 @@ var point = {
 };
 // here it should be a function but it extracts the output of it
 console.log(point);
-//Parameters utitlity is used to extract the 
+var pointPrinter = {
+    x: 10,
+    y: 20
+};
+console.log(pointPrinter);
+var person5 = {
+    name: "ELiyasab",
+    age: 25
+};
+// person5.name= "sab";// it will not perform since it is areadonly property
+console.log(person5);
+function printPersonProperty(person, property) {
+    console.log("Printing Person Property: ".concat(property, ": ").concat(person[property]));
+}
+var supMan = {
+    name: "clark kent",
+    age: 1000
+};
+printPersonProperty(supMan, "name");
+// in this context keyof will resolves to string
+function mappingString(property, value) {
+    var _a;
+    return _a = {}, _a[property] = value, _a;
+}
+console.log(mappingString("name", "ELiyas"));
+var val1 = "it is a string i guess";
+console.log(typeof val1);
+val1 = undefined;
+console.log(typeof val1);
+function printYardSqftofHome(myHome) {
+    if (myHome.yard === undefined) {
+        return "No Yard Value Home sqft is ".concat(myHome.sqft);
+    }
+    else {
+        return "Sqrt of Yard is ".concat(myHome.yard.sqft);
+    }
+}
+var myHome = {
+    sqft: 220,
+    yard: {
+        sqft: 300
+    }
+};
+console.log(printYardSqftofHome(myHome));
+function printBufferValue(myVal) {
+    return "MIliage: ".concat(myVal !== null && myVal !== void 0 ? myVal : 'no value provdied');
+}
+console.log(printBufferValue(undefined));
+// Null Assessrtion
+function getValue() {
+    return "Hellow";
+}
+var val2 = getValue();
+console.log("value length is ".concat(val2.length));
+// Array Bounds Handling
+var arr = [1, 2, 3, 4];
+var arrVal = arr[0];
+console.log(arrVal);

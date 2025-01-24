@@ -68,7 +68,7 @@ numbers.push(5);
 // numbers.push("6"); thorws error for the string push in an number[] array 
 console.log(numbers);
 
-const head: number = numbers[0];
+const head = numbers[0];
 console.log(head);
 
 //Typed Array
@@ -483,7 +483,7 @@ console.log(wrap);
 
 // Default values for the generics
 class NamedVal<T = string> {
-    private value : T | undefined;
+    private value : T ;
 
     constructor(private name: string ) {}
 
@@ -580,4 +580,99 @@ const point: ReturnType<PointGenerator> =  {
 // here it should be a function but it extracts the output of it
 console.log(point);
 
-//Parameters utitlity is used to extract the 
+//Parameters utitlity is used to extract the Parameter type as an array
+type PointPrinter = (p: { x: number, y: number }) => void;
+const pointPrinter: Parameters<PointPrinter>[0] = {
+    x: 10,
+    y: 20
+}
+console.log(pointPrinter);
+
+// Readonly utility is used to create new type where all the properites are readonly and cannot be reassigned
+interface Person5 {
+    name: string,
+    age: number
+}
+const person5: Readonly< Person5> = {
+    name: "ELiyasab",
+    age: 25
+}
+// person5.name= "sab";// it will not perform since it is areadonly property
+console.log(person5);
+
+//Typescript Keyof operator
+// keyof is keyword which is used to extract the key type of an Object type
+// in the below example keyof type will create union type of name and age and only accepts that types
+interface Person6 {
+    name: string,
+    age: number
+}
+function printPersonProperty(person: Person6, property: keyof Person5) : void {
+    console.log(`Printing Person Property: ${property}: ${person[property]}`); 
+}
+let supMan = {
+    name: "clark kent",
+    age: 1000
+}
+printPersonProperty(supMan, "name");
+
+// keyof is also used to extract the index signatures
+type stringMap = { [key: string ]: unknown };
+// in this context keyof will resolves to string
+function mappingString ( property: keyof stringMap, value: string): stringMap {
+    return { [property] : value}
+}
+console.log(mappingString("name", "ELiyas"));
+
+// TypeScript null or undefined
+// Primitive types null and undefined are type so we can assign it to a variable as a type
+type Val1 = string | null | undefined;
+let val1: Val1 = "it is a string i guess";
+console.log(typeof val1);
+val1 = undefined;
+console.log(typeof val1);
+
+// optional chaining is like the properties may or may not be exist it can be used with the properties with '?'
+interface House {
+    sqft: number,
+    yard?: {
+        sqft: number
+    }
+    // it is a optional property for House interface
+}
+function printYardSqftofHome (myHome: House): string {
+    if (myHome.yard === undefined) {
+        return `No Yard Value Home sqft is ${myHome.sqft}`;
+    } else {
+        return `Sqrt of Yard is ${myHome.yard.sqft}`;
+    }
+}
+let myHome: House = {
+    sqft: 220,
+    yard: {
+        sqft: 300
+    }
+}
+console.log(printYardSqftofHome(myHome))
+
+
+// Nullish coalescens
+// similar to && , ?? also provides the option to handle the null or undefined value
+type NullishValue = number | null | undefined;
+function printBufferValue (myVal : NullishValue): string {
+    return `MIliage: ${myVal ?? 'no value provdied'}`;
+}
+console.log(printBufferValue(undefined));
+
+
+// Null Assessrtion
+function getValue(): string | undefined {
+    return `Hellow`;
+}
+let val2 = getValue();
+console.log(`value length is ${val2!.length}`);
+
+// Array Bounds Handling
+let arr : number[] = [1,2,3,4];
+let arrVal = arr[0];
+console.log(arrVal);
