@@ -24,7 +24,7 @@ var json = JSON.parse("55"); // js will parse number directly
 console.log(json);
 var json1 = JSON.parse('{"name": "Eliyas"}'); // js needs a json object to parse it out the value
 console.log(json1);
-console.log(typeof json);
+console.log(typeof json1);
 // Typescript understanding special types ANY and UNKNOWN
 var u = true;
 u = "ELiyas";
@@ -45,7 +45,7 @@ if (typeof w === 'object' && w !== null) {
 //examples of assigning a type to its variable after it declared
 var obj = { name: "Eliyas", age: 26 };
 console.log(obj);
-var unkownValue = "Hello World";
+var unkownValue = 4545;
 console.log(typeof unkownValue);
 // API hit will return the value with type safe if it is not assigned
 // const externalData = fetchData() as {id: number, name: string };
@@ -54,8 +54,8 @@ console.log(typeof unkownValue);
 //Typescript Arrays
 // specifiying the types which needs to use in a array
 var names = [];
-names.push("Mohamed");
-names.push("Eliyas");
+names.push(5);
+names.push(6);
 // names.push(26); //gives a error so it will not return the desired expectations
 console.log(names);
 //making the array as Readonly so that it can't be changed
@@ -65,7 +65,7 @@ console.log(marks);
 //TypeScript type inference can infer the type of an array if it has the values
 var numbers = [1, 2, 3, 4];
 numbers.push(5);
-// numbers.push("6"); thorws error for the string push in an number[] array 
+//numbers.push("6"); //thorws error for the string push in an number[] array 
 console.log(numbers);
 var head = numbers[0];
 console.log(head);

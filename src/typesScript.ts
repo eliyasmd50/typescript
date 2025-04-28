@@ -11,7 +11,7 @@ const json = JSON.parse("55");// js will parse number directly
 console.log(json);
 const json1 = JSON.parse('{"name": "Eliyas"}');// js needs a json object to parse it out the value
 console.log(json1);
-console.log(typeof json);
+console.log(typeof json1);
 
 
 // Typescript understanding special types ANY and UNKNOWN
@@ -38,8 +38,8 @@ if (typeof w === 'object' && w !== null) {
 const obj = { name: "Eliyas", age: 26} as { name: string, age: number};
 console.log(obj);
 
-const unkownValue: unknown = "Hello World";
-console.log(typeof (unkownValue as string));
+const unkownValue: unknown = 4545;
+console.log(typeof (unkownValue as String));
 
 // API hit will return the value with type safe if it is not assigned
 // const externalData = fetchData() as {id: number, name: string };
@@ -49,9 +49,9 @@ console.log(typeof (unkownValue as string));
 
 //Typescript Arrays
 // specifiying the types which needs to use in a array
-const names: string[] = [];
-names.push("Mohamed");
-names.push("Eliyas");
+const names: number[] = [];
+names.push(5);
+names.push(6);
 // names.push(26); //gives a error so it will not return the desired expectations
 console.log(names);
 
@@ -65,7 +65,7 @@ console.log(marks);
 //TypeScript type inference can infer the type of an array if it has the values
 const numbers = [1,2,3,4];
 numbers.push(5);
-// numbers.push("6"); thorws error for the string push in an number[] array 
+//numbers.push("6"); //thorws error for the string push in an number[] array 
 console.log(numbers);
 
 const head = numbers[0];
